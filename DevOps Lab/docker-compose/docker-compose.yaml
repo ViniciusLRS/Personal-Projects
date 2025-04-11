@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # Serviço do Jenkins
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: always
+    ports:
+      - "8080:8080"   # Jenkins UI
+      - "50000:50000" # Jenkins Agent
+    volumes:
+      - jenkins_home:/var/jenkins_home  # Persistência dos dados do Jenkins
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false  # Para desabilitar o setup wizard
+
+    # Serviço do Nginx como proxy reverso
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+  # Serviço do Prometheus (monitoramento)
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    ports:
+      - "9090:9090"  # UI do Prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  # Serviço do Grafana (visualização)
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"  # UI do Grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  jenkins_home:
+  grafana_data:
