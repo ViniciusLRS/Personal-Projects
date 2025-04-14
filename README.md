@@ -45,5 +45,5 @@ Este repositório contém **projetos em andamento e testes experimentais**. Use 
 
 Se quiser trocar ideia ou colaborar:
 
-- GitHub: [ViniciusLRS](https://github.com/ViniciusLRS)
+- GitHub: [ViniciusDSBarbosa](https://github.com/ViniciusDSBarbosa)
 - LinkedIn: [vsb-infra-management](https://linkedin.com/in/vsb-infra-management)
