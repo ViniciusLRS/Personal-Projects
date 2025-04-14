@@ -1,6 +1,6 @@
 # Personal-Projects
 
-# 🧠 Vinicius' DevOps Lab & Projects
+# 🧠 DevOps Lab & Projects
 
 Bem-vindo(a) ao meu repositório pessoal de projetos, automações, scripts e experimentações com tecnologias voltadas à infraestrutura, DevOps e segurança da informação.
 
