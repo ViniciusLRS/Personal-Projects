@@ -10,14 +10,7 @@ Abra o Prompt de Comando (CMD) ou PowerShell e rode:
 pip install psutil win10toast
 ![alt text](image.png)
 
-3. Crie o arquivo do programa
-Abra o Bloco de Notas ou qualquer editor (VS Code recomendado).
-
-Copie e cole o código.
-
-Salve com o nome: monitor_mineracao.py.
-
-4. Execute o programa
+3. Execute o programa
 No terminal, vá até a pasta onde o arquivo está salvo, e rode:
 
 python monitor_mineracao.py
