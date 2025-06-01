@@ -1,5 +1,30 @@
 #!/bin/bash
 
+# Configura o hostname da máquina
+sudo hostnamectl set-hostname "k8s-master"      // Master Node
+# sudo hostnamectl set-hostname "k8s-worker01"    // Worker Node 1
+# sudo hostnamectl set-hostname "k8s-worker02"    // Worker Node 2
+
+# Adiciona os ips do cluster no arquivo /etc/hosts 
+entries=(
+  "X.X.X.X  k8s-mastere"
+  "X.X.X.X  k8s-worker01"
+  "X.X.X.X  k8s-worker02"
+)
+
+echo "Atualizando /etc/hosts com IPs do cluster..."
+
+for entry in "${entries[@]}"; do
+  if ! grep -q "$entry" /etc/hosts; then
+    echo "$entry" | sudo tee -a /etc/hosts > /dev/null
+    echo "Adicionado: $entry"
+  else
+    echo "Já existe: $entry"
+  fi
+done
+
+echo "/etc/hosts atualizado com sucesso!"
+
 echo Desativando o Swap!
 sudo swapoff -a
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
@@ -32,9 +57,9 @@ sudo systemctl enable containerd
 
 echo Adicionando o repositório do Kubernetes!
 sudo apt update && sudo apt install -y apt-transport-https curl
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/k8s.gpg
 
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/k8s.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/k8s.list
 
 echo Instalando o kubeadm, kubelet e kubectl!
 sudo apt update
